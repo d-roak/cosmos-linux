@@ -27,27 +27,27 @@ echo -e "\n\n\n\n\n Your NAMESPACE_ID is $NAMESPACE_ID \n\n Your DA_BLOCK_HEIGHT
 ignite chain build
 
 # reset any existing genesis/chain data
-cld tendermint unsafe-reset-all
+cosmos-linuxd tendermint unsafe-reset-all
 
 # initialize the validator with the chain ID you set
-cld init $VALIDATOR_NAME --chain-id $CHAIN_ID
+cosmos-linuxd init $VALIDATOR_NAME --chain-id $CHAIN_ID
 
 # add keys for key 1 and key 2 to keyring-backend test
-cld keys add $KEY_NAME --keyring-backend test
-cld keys add $KEY_2_NAME --keyring-backend test
+cosmos-linuxd keys add $KEY_NAME --keyring-backend test
+cosmos-linuxd keys add $KEY_2_NAME --keyring-backend test
 
 # add these as genesis accounts
-cld add-genesis-account $KEY_NAME $TOKEN_AMOUNT --keyring-backend test
-cld add-genesis-account $KEY_2_NAME $TOKEN_AMOUNT --keyring-backend test
+cosmos-linuxd add-genesis-account $KEY_NAME $TOKEN_AMOUNT --keyring-backend test
+cosmos-linuxd add-genesis-account $KEY_2_NAME $TOKEN_AMOUNT --keyring-backend test
 
 # set the staking amounts in the genesis transaction
-cld gentx $KEY_NAME $STAKING_AMOUNT --chain-id $CHAIN_ID --keyring-backend test
+cosmos-linuxd gentx $KEY_NAME $STAKING_AMOUNT --chain-id $CHAIN_ID --keyring-backend test
 
 # collect genesis transactions
-cld collect-gentxs
+cosmos-linuxd collect-gentxs
 
 # start the chain
-cld start --rollkit.aggregator true --rollkit.da_layer celestia --rollkit.da_config='{"base_url":"http://localhost:26658","timeout":60000000000,"fee":600000,"gas_limit":6000000,"auth_token":"'$AUTH_TOKEN'"}' --rollkit.namespace_id $NAMESPACE_ID --rollkit.da_start_height $DA_BLOCK_HEIGHT --rpc.laddr tcp://127.0.0.1:36657 --p2p.laddr "0.0.0.0:36656"
+cosmos-linuxd start --rollkit.aggregator true --rollkit.da_layer celestia --rollkit.da_config='{"base_url":"http://localhost:26658","timeout":60000000000,"fee":600000,"gas_limit":6000000,"auth_token":"'$AUTH_TOKEN'"}' --rollkit.namespace_id $NAMESPACE_ID --rollkit.da_start_height $DA_BLOCK_HEIGHT --rpc.laddr tcp://127.0.0.1:36657 --p2p.laddr "0.0.0.0:36656"
 
 # uncomment the next command if you are using lazy aggregation
 # gmd start --rollkit.aggregator true --rollkit.da_layer celestia --rollkit.da_config='{"base_url":"http://localhost:26658","timeout":60000000000,"fee":600000,"gas_limit":6000000,"auth_token":"'$AUTH_TOKEN'"}' --rollkit.namespace_id $NAMESPACE_ID --rollkit.da_start_height $DA_BLOCK_HEIGHT --rollkit.lazy_aggregator

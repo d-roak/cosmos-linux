@@ -24,14 +24,14 @@ echo $DA_BLOCK_HEIGHT
 # build the gm chain with Rollkit
 ignite chain build
 
-cld tendermint unsafe-reset-all
-cld init $VALIDATOR_NAME --chain-id $CHAIN_ID
-cld keys add $KEY_NAME --keyring-backend test
-cld keys add $KEY_2_NAME --keyring-backend test
-cld add-genesis-account $KEY_NAME $TOKEN_AMOUNT --keyring-backend test
-cld add-genesis-account $KEY_2_NAME $TOKEN_AMOUNT --keyring-backend test
-cld gentx $KEY_NAME $STAKING_AMOUNT --chain-id $CHAIN_ID --keyring-backend test
-cld collect-gentxs
+cosmos-linuxd tendermint unsafe-reset-all
+cosmos-linuxd init $VALIDATOR_NAME --chain-id $CHAIN_ID
+cosmos-linuxd keys add $KEY_NAME --keyring-backend test
+cosmos-linuxd keys add $KEY_2_NAME --keyring-backend test
+cosmos-linuxd add-genesis-account $KEY_NAME $TOKEN_AMOUNT --keyring-backend test
+cosmos-linuxd add-genesis-account $KEY_2_NAME $TOKEN_AMOUNT --keyring-backend test
+cosmos-linuxd gentx $KEY_NAME $STAKING_AMOUNT --chain-id $CHAIN_ID --keyring-backend test
+cosmos-linuxd collect-gentxs
 
 # export the Celestia light node's auth token to allow you to submit
 # PayForBlobs to Celestia's data availability network
@@ -39,4 +39,4 @@ cld collect-gentxs
 export AUTH_TOKEN=$(celestia light auth write --p2p.network arabica)
 
 # start the chain
-cld start --rollkit.aggregator true --rollkit.da_layer celestia --rollkit.da_config='{"base_url":"http://localhost:26658","timeout":60000000000,"fee":600000,"gas_limit":6000000,"auth_token":"'$AUTH_TOKEN'"}' --rollkit.namespace_id $NAMESPACE_ID --rollkit.da_start_height $DA_BLOCK_HEIGHT
+cosmos-linuxd start --rollkit.aggregator true --rollkit.da_layer celestia --rollkit.da_config='{"base_url":"http://localhost:26658","timeout":60000000000,"fee":600000,"gas_limit":6000000,"auth_token":"'$AUTH_TOKEN'"}' --rollkit.namespace_id $NAMESPACE_ID --rollkit.da_start_height $DA_BLOCK_HEIGHT

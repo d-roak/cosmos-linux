@@ -1,4 +1,5 @@
 syntax = "proto3";
+
 package cosmoslinux.cosmoslinux;
 
 import "gogoproto/gogo.proto";
@@ -10,17 +11,32 @@ option go_package = "cosmos-linux/x/cosmoslinux/types";
 
 // Query defines the gRPC querier service.
 service Query {
+  
   // Parameters queries the parameters of the module.
-  rpc Params(QueryParamsRequest) returns (QueryParamsResponse) {
+  rpc Params (QueryParamsRequest) returns (QueryParamsResponse) {
     option (google.api.http).get = "/cosmos-linux/cosmoslinux/params";
+  
+  }
+  
+  // Queries a list of Cl items.
+  rpc Cl (QueryClRequest) returns (QueryClResponse) {
+    option (google.api.http).get = "/cosmos-linux/cosmoslinux/cl";
+  
   }
 }
-
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
 
 // QueryParamsResponse is response type for the Query/Params RPC method.
 message QueryParamsResponse {
+  
   // params holds all the parameters of this module.
   Params params = 1 [(gogoproto.nullable) = false];
 }
+
+message QueryClRequest {}
+
+message QueryClResponse {
+  string text = 1;
+}
+
