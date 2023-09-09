@@ -7,4 +7,5 @@ message Machine {
   string creator = 1;
   string id = 2; 
   string state = 3; 
+  repeated string commands = 4;
 }

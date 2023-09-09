@@ -5,6 +5,7 @@ import (
 
 	"github.com/cometbft/cometbft/libs/log"
 	"github.com/cosmos/cosmos-sdk/codec"
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	storetypes "github.com/cosmos/cosmos-sdk/store/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	paramtypes "github.com/cosmos/cosmos-sdk/x/params/types"
@@ -46,5 +47,10 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 func (k Keeper) AddMachine(ctx sdk.Context, machine types.Machine) string {
+    store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
 
+    appendedValue := k.cdc.MustMarshal(&machine)
+    store.Set([]byte(machine.Id), appendedValue)
+
+    return machine.Id
 }
