@@ -40,12 +40,6 @@ message QueryParamsResponse {
   Params params = 1 [(gogoproto.nullable) = false];
 }
 
-message QueryClRequest {}
-
-message QueryClResponse {
-  string text = 1;
-}
-
 message QueryOutputRequest {
   string machine_id = 1;
 }
@@ -59,6 +53,6 @@ message QueryCommandsListRequest {
 }
 
 message QueryCommandsListResponse {
-  repeated string command = 1;
+  repeated string commands = 1;
 }
 

@@ -16,30 +16,28 @@ func (k Keeper) CommandsList(goCtx context.Context, req *types.QueryCommandsList
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
-
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Process the query
-	_ = ctx
-
-    if req.MachineId == "" {
+    machine, err := k.GetMachine(ctx, req.MachineId)
+    if err != nil {
         return nil, status.Error(codes.InvalidArgument, "invalid machine id")
     }
 
-	return &types.QueryCommandsListResponse{}, nil
+    return &types.QueryCommandsListResponse{Commands: machine.Commands}, nil
 }
 
 func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*types.QueryOutputResponse, error) {
 	if req == nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid request")
 	}
-
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Process the query
-	_ = ctx
+    machine, err := k.GetMachine(ctx, req.MachineId)
+    if err != nil {
+        return nil, status.Error(codes.InvalidArgument, "invalid machine id")
+    }
 
-    output, _ := utils.StartDockerContainer([]string{"ls", "ps"})
+    output, _ := utils.StartDockerContainer(machine.Commands)
 
     return &types.QueryOutputResponse{Output: output}, nil
 }

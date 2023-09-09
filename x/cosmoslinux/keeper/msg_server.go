@@ -42,8 +42,10 @@ func (k msgServer) CreateMachine(goCtx context.Context, msg *types.MsgCreateMach
 func (k msgServer) RunCommand(goCtx context.Context, msg *types.MsgRunCommand) (*types.MsgRunCommandResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+    err := k.AppendCommand(ctx, msg.MachineId, msg.Command)
+    if err != nil {
+        return nil, err
+    }
 
 	return &types.MsgRunCommandResponse{}, nil
 }

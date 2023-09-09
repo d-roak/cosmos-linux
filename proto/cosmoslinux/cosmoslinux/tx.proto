@@ -11,6 +11,8 @@ service Msg {
 }
 message MsgRunCommand {
   string creator = 1;
+  string machineId = 2;
+  string command = 3;
 }
 
 message MsgRunCommandResponse {}
