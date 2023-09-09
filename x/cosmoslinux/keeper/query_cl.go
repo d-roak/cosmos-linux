@@ -22,8 +22,7 @@ func (k Keeper) Cl(goCtx context.Context, req *types.QueryClRequest) (*types.Que
 	// TODO: Process the query
 	_ = ctx
 
-    id, _ := utils.StartDockerContainer([]string{})
+	id, _ := utils.StartDockerContainer([]string{})
 
-    return &types.QueryClResponse{Text: fmt.Sprintf("%s", id)}, nil
+	return &types.QueryClResponse{Text: fmt.Sprintf("%s", id)}, nil
 }
-
