@@ -1,52 +1,46 @@
-# cosmoslinux
-**cosmoslinux** is a blockchain built using Cosmos SDK and Tendermint and created with [Ignite CLI](https://ignite.com/cli).
+# 🚀 cosmos-linux: Let's Journey through the Cosmos!
+Welcome to cosmos-linux, the splendid combination of Cosmos SDK and Celestia DA Layer! Dive into the thrill of creating a Linux VM, execute your favorite commands, and bask in the glow of your machine's output.
 
-## Get started
+## Why the Excitement? 🌌
+Because why not? 🤷‍♂️ While running a Linux VM on a rollup might not be the speedy Gonzales of the tech world, it perfectly illustrates the wondrous capabilities of the Cosmos SDK. Plus, it's an exhilarating tutorial for creating rollups and marrying them to Celestia.
 
+## Glittering Features ✨
+- [x] Create multiple Linux VMs
+- [x] Run commands in the VM
+- [x] Read the logs of the VM 
+- [x] Caching machines state for querying (on nodes)
+- [ ] Deterministic machines
+  - [x] Disable network
+  - [ ] Change Linux kernel entropy pool for random seeding
+  - [ ] Change Date/Time behavior
+
+## Treasure Map 🗺️
+Keen to unravel the sorcery behind this project? Your treasure map points to these files:
 ```
-ignite chain serve
+x/cosmoslinux/keeper/*
+x/cosmoslinux/utils/docker.go
 ```
+ 
+## First Steps to the Stars! ⭐️
+Ready to blast off? Make sure your spaceship (laptop) is fueled up with Golang and Docker.
 
-`serve` command installs dependencies, builds, initializes, and starts your blockchain in development.
-
-### Configure
-
-Your blockchain in development can be configured with `config.yml`. To learn more, see the [Ignite CLI docs](https://docs.ignite.com).
-
-### Web Frontend
-
-Ignite CLI has scaffolded a Vue.js-based web app in the `vue` directory. Run the following commands to install dependencies and start the app:
-
+Command your local Celestia node to life:
 ```
-cd vue
-npm install
-npm run serve
-```
-
-The frontend app is built using the `@starport/vue` and `@starport/vuex` packages. For details, see the [monorepo for Ignite front-end development](https://github.com/ignite/web).
-
-## Release
-To release a new version of your blockchain, create and push a new tag with `v` prefix. A new draft release with the configured targets will be created.
-
-```
-git tag v0.1
-git push origin v0.1
+docker run \
+    -p 36657:26657 -p 36658:26658 -p 36659:26659 -p 9090:9090 \
+    ghcr.io/rollkit/local-celestia-devnet:v0.11.0-rc8
 ```
 
-After a draft release is created, make your final changes from the release page and publish it.
+On another console, ignite the `./init-local.sh` script and soar through the cosmos!
 
-### Install
-To install the latest version of your blockchain node's binary, execute the following command on your machine:
-
+Need some playful trials? Here you go:
 ```
-curl https://get.ignite.com/username/cosmos-linux@latest! | sudo bash
+# create a new machine, you should check the machine id in the logs
+cosmos-linuxd tx cosmoslinux create-machine --from linux-key
+
+# run the `ps` command
+cosmos-linuxd tx cosmoslinux run-command ${MACHINE_ID} ps --from linux-key
+
+# check the logs of the machine
+cosmos-linuxd q cosmoslinux output ${MACHINE_ID}
 ```
-`username/cosmos-linux` should match the `username` and `repo_name` of the Github repository to which the source code was pushed. Learn more about [the install process](https://github.com/allinbits/starport-installer).
-
-## Learn more
-
-- [Ignite CLI](https://ignite.com/cli)
-- [Tutorials](https://docs.ignite.com/guide)
-- [Ignite CLI docs](https://docs.ignite.com)
-- [Cosmos SDK docs](https://docs.cosmos.network)
-- [Developer Chat](https://discord.gg/ignite)
