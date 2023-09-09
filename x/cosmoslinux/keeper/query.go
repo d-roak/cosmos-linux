@@ -39,7 +39,7 @@ func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*t
 	// TODO: Process the query
 	_ = ctx
 
-    output, _ := utils.StartDockerContainer([]string{"ls", "-la"})
+    output, _ := utils.StartDockerContainer([]string{"ls", "ps"})
 
     return &types.QueryOutputResponse{Output: output}, nil
 }

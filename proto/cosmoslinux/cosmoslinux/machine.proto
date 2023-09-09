@@ -1,0 +1,10 @@
+syntax = "proto3";
+package cosmoslinux.cosmoslinux;
+
+option go_package = "cosmos-linux/x/cosmoslinux/types";
+
+message Machine {
+  string creator = 1;
+  string id = 2; 
+  string state = 3; 
+}
