@@ -23,7 +23,15 @@ var (
 )
 
 const (
-// this line is used by starport scaffolding # simapp/module/const
+	opWeightMsgRunCommand = "op_weight_msg_run_command"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgRunCommand int = 100
+
+	opWeightMsgCreateMachine = "op_weight_msg_create_machine"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateMachine int = 100
+
+	// this line is used by starport scaffolding # simapp/module/const
 )
 
 // GenerateGenesisState creates a randomized GenState of the module.
@@ -51,6 +59,28 @@ func (AppModule) ProposalContents(_ module.SimulationState) []simtypes.WeightedP
 func (am AppModule) WeightedOperations(simState module.SimulationState) []simtypes.WeightedOperation {
 	operations := make([]simtypes.WeightedOperation, 0)
 
+	var weightMsgRunCommand int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgRunCommand, &weightMsgRunCommand, nil,
+		func(_ *rand.Rand) {
+			weightMsgRunCommand = defaultWeightMsgRunCommand
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgRunCommand,
+		cosmoslinuxsimulation.SimulateMsgRunCommand(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgCreateMachine int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateMachine, &weightMsgCreateMachine, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateMachine = defaultWeightMsgCreateMachine
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateMachine,
+		cosmoslinuxsimulation.SimulateMsgCreateMachine(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -59,6 +89,22 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 // ProposalMsgs returns msgs used for governance proposals for simulations.
 func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.WeightedProposalMsg {
 	return []simtypes.WeightedProposalMsg{
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgRunCommand,
+			defaultWeightMsgRunCommand,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				cosmoslinuxsimulation.SimulateMsgRunCommand(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateMachine,
+			defaultWeightMsgCreateMachine,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				cosmoslinuxsimulation.SimulateMsgCreateMachine(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
 		// this line is used by starport scaffolding # simapp/module/OpMsg
 	}
 }

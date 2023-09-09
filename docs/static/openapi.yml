@@ -34923,17 +34923,56 @@ paths:
           format: int64
       tags:
         - Query
-  /cosmos-linux/cosmoslinux/cl:
+  /cosmos-linux/cosmoslinux/commands_list:
     get:
-      summary: Queries a list of Cl items.
-      operationId: CosmoslinuxCosmoslinuxCl
+      summary: Queries a list of CommandsList items.
+      operationId: CosmoslinuxCosmoslinuxCommandsList
       responses:
         '200':
           description: A successful response.
           schema:
             type: object
             properties:
-              text:
+              command:
+                type: array
+                items:
+                  type: string
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: machine_id
+          in: query
+          required: false
+          type: string
+      tags:
+        - Query
+  /cosmos-linux/cosmoslinux/output:
+    get:
+      summary: Queries a list of Output items.
+      operationId: CosmoslinuxCosmoslinuxOutput
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              output:
                 type: string
         default:
           description: An unexpected error response.
@@ -34953,6 +34992,11 @@ paths:
                     '@type':
                       type: string
                   additionalProperties: {}
+      parameters:
+        - name: machine_id
+          in: query
+          required: false
+          type: string
       tags:
         - Query
   /cosmos-linux/cosmoslinux/params:
@@ -70599,13 +70643,27 @@ definitions:
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
     description: Period defines a length of time and amount of coins that will vest.
+  cosmoslinux.cosmoslinux.MsgCreateMachineResponse:
+    type: object
+    properties:
+      machineId:
+        type: string
+  cosmoslinux.cosmoslinux.MsgRunCommandResponse:
+    type: object
   cosmoslinux.cosmoslinux.Params:
     type: object
     description: Params defines the parameters for the module.
-  cosmoslinux.cosmoslinux.QueryClResponse:
+  cosmoslinux.cosmoslinux.QueryCommandsListResponse:
     type: object
     properties:
-      text:
+      command:
+        type: array
+        items:
+          type: string
+  cosmoslinux.cosmoslinux.QueryOutputResponse:
+    type: object
+    properties:
+      output:
         type: string
   cosmoslinux.cosmoslinux.QueryParamsResponse:
     type: object
