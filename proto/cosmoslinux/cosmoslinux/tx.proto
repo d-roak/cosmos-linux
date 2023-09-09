@@ -1,7 +1,16 @@
 syntax = "proto3";
+
 package cosmoslinux.cosmoslinux;
 
 option go_package = "cosmos-linux/x/cosmoslinux/types";
 
 // Msg defines the Msg service.
-service Msg {}
+service Msg {
+  rpc RunCommand (MsgRunCommand) returns (MsgRunCommandResponse);
+}
+message MsgRunCommand {
+  string creator = 1;
+}
+
+message MsgRunCommandResponse {}
+
