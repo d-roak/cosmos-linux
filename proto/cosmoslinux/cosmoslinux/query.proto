@@ -23,6 +23,12 @@ service Query {
     option (google.api.http).get = "/cosmos-linux/cosmoslinux/cl";
   
   }
+  
+  // Queries a list of Output items.
+  rpc Output (QueryOutputRequest) returns (QueryOutputResponse) {
+    option (google.api.http).get = "/cosmos-linux/cosmoslinux/output";
+  
+  }
 }
 // QueryParamsRequest is request type for the Query/Params RPC method.
 message QueryParamsRequest {}
@@ -39,4 +45,8 @@ message QueryClRequest {}
 message QueryClResponse {
   string text = 1;
 }
+
+message QueryOutputRequest {}
+
+message QueryOutputResponse {}
 

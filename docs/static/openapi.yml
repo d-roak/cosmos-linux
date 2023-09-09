@@ -34955,6 +34955,35 @@ paths:
                   additionalProperties: {}
       tags:
         - Query
+  /cosmos-linux/cosmoslinux/output:
+    get:
+      summary: Queries a list of Output items.
+      operationId: CosmoslinuxCosmoslinuxOutput
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      tags:
+        - Query
   /cosmos-linux/cosmoslinux/params:
     get:
       summary: Parameters queries the parameters of the module.
@@ -70607,6 +70636,8 @@ definitions:
     properties:
       text:
         type: string
+  cosmoslinux.cosmoslinux.QueryOutputResponse:
+    type: object
   cosmoslinux.cosmoslinux.QueryParamsResponse:
     type: object
     properties:
