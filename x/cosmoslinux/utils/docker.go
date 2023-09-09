@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -51,7 +52,7 @@ func StartDockerContainer(commands []string) (string, error) {
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
 		Image: "alpine",
-		Cmd:   []string{"ls"},
+		Cmd:   []string{"sh", "-c", strings.Join(commands[:], "&&")},
 		Tty:   true,
 	}, nil, nil, nil, "")
 	if err != nil {
