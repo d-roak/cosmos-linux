@@ -18,15 +18,15 @@ service Query {
   
   }
   
-  // Queries a list of Cl items.
-  rpc Cl (QueryClRequest) returns (QueryClResponse) {
-    option (google.api.http).get = "/cosmos-linux/cosmoslinux/cl";
-  
-  }
-  
   // Queries a list of Output items.
   rpc Output (QueryOutputRequest) returns (QueryOutputResponse) {
     option (google.api.http).get = "/cosmos-linux/cosmoslinux/output";
+  
+  }
+  
+  // Queries a list of CommandsList items.
+  rpc CommandsList (QueryCommandsListRequest) returns (QueryCommandsListResponse) {
+    option (google.api.http).get = "/cosmos-linux/cosmoslinux/commands_list";
   
   }
 }
@@ -46,7 +46,19 @@ message QueryClResponse {
   string text = 1;
 }
 
-message QueryOutputRequest {}
+message QueryOutputRequest {
+  string machine_id = 1;
+}
 
-message QueryOutputResponse {}
+message QueryOutputResponse {
+  string output = 1;
+}
+
+message QueryCommandsListRequest {
+  string machine_id = 1;
+}
+
+message QueryCommandsListResponse {
+  repeated string command = 1;
+}
 

@@ -11,10 +11,10 @@ import (
 
 var _ = strconv.Itoa(0)
 
-func CmdCl() *cobra.Command {
+func CmdCommandsList() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "cl",
-		Short: "Query cl",
+		Use:   "commands-list",
+		Short: "Query commands_list",
 		Args:  cobra.ExactArgs(0),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 
@@ -25,9 +25,9 @@ func CmdCl() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryClRequest{}
+			params := &types.QueryCommandsListRequest{}
 
-			res, err := queryClient.Cl(cmd.Context(), params)
+			res, err := queryClient.CommandsList(cmd.Context(), params)
 			if err != nil {
 				return err
 			}
