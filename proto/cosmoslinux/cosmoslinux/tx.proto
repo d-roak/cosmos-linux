@@ -19,5 +19,7 @@ message MsgCreateMachine {
   string creator = 1;
 }
 
-message MsgCreateMachineResponse {}
+message MsgCreateMachineResponse {
+  string machineId = 1;
+}
 

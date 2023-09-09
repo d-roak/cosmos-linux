@@ -13,9 +13,9 @@ var _ = strconv.Itoa(0)
 
 func CmdOutput() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "output",
+		Use:   "output [machineId]",
 		Short: "Query output",
-		Args:  cobra.ExactArgs(0),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 
 			clientCtx, err := client.GetClientQueryContext(cmd)

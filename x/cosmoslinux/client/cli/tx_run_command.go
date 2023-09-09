@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"cosmos-linux/x/cosmoslinux/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
@@ -14,9 +15,9 @@ var _ = strconv.Itoa(0)
 
 func CmdRunCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "run-command",
+		Use:   "run-command [cmd]",
 		Short: "Broadcast message run_command",
-		Args:  cobra.ExactArgs(0),
+		Args:  cobra.MinimumNArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 
 			clientCtx, err := client.GetClientTxContext(cmd)

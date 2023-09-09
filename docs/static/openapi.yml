@@ -70645,6 +70645,9 @@ definitions:
     description: Period defines a length of time and amount of coins that will vest.
   cosmoslinux.cosmoslinux.MsgCreateMachineResponse:
     type: object
+    properties:
+      machineId:
+        type: string
   cosmoslinux.cosmoslinux.MsgRunCommandResponse:
     type: object
   cosmoslinux.cosmoslinux.Params:
