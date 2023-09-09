@@ -3,6 +3,7 @@ package keeper
 import (
 	"context"
 	"cosmos-linux/x/cosmoslinux/types"
+	"cosmos-linux/x/cosmoslinux/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"google.golang.org/grpc/codes"
@@ -38,7 +39,9 @@ func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*t
 	// TODO: Process the query
 	_ = ctx
 
-	return &types.QueryOutputResponse{}, nil
+    output, _ := utils.StartDockerContainer([]string{"ls", "-la"})
+
+    return &types.QueryOutputResponse{Output: output}, nil
 }
 
 func (k Keeper) Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

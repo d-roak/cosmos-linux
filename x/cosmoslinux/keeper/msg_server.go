@@ -5,6 +5,7 @@ import (
 	"cosmos-linux/x/cosmoslinux/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/google/uuid"
 )
 
 type msgServer struct {
@@ -25,7 +26,9 @@ func (k msgServer) CreateMachine(goCtx context.Context, msg *types.MsgCreateMach
 	// TODO: Handling the message
 	_ = ctx
 
-	return &types.MsgCreateMachineResponse{}, nil
+    id := uuid.New().String()
+
+    return &types.MsgCreateMachineResponse{MachineId: id}, nil
 }
 
 func (k msgServer) RunCommand(goCtx context.Context, msg *types.MsgRunCommand) (*types.MsgRunCommandResponse, error) {
