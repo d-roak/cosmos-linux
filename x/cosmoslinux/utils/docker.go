@@ -51,9 +51,10 @@ func StartDockerContainer(commands []string) (string, error) {
 	io.Copy(os.Stdout, reader)
 
 	resp, err := cli.ContainerCreate(ctx, &container.Config{
-		Image: "alpine",
-		Cmd:   []string{"sh", "-c", strings.Join(commands[:], "&&")},
-		Tty:   true,
+		Image:           "alpine",
+		Cmd:             []string{"sh", "-c", strings.Join(commands[:], "&&")},
+		Tty:             true,
+		NetworkDisabled: true,
 	}, nil, nil, nil, "")
 	if err != nil {
 		panic(err)
