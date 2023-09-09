@@ -70643,6 +70643,8 @@ definitions:
             NOTE: The amount field is an Int which implements the custom method
             signatures required by gogoproto.
     description: Period defines a length of time and amount of coins that will vest.
+  cosmoslinux.cosmoslinux.MsgCreateMachineResponse:
+    type: object
   cosmoslinux.cosmoslinux.MsgRunCommandResponse:
     type: object
   cosmoslinux.cosmoslinux.Params:

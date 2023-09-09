@@ -27,6 +27,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgRunCommand int = 100
 
+	opWeightMsgCreateMachine = "op_weight_msg_create_machine"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgCreateMachine int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -66,6 +70,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 		cosmoslinuxsimulation.SimulateMsgRunCommand(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
+	var weightMsgCreateMachine int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgCreateMachine, &weightMsgCreateMachine, nil,
+		func(_ *rand.Rand) {
+			weightMsgCreateMachine = defaultWeightMsgCreateMachine
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgCreateMachine,
+		cosmoslinuxsimulation.SimulateMsgCreateMachine(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
 	// this line is used by starport scaffolding # simapp/module/operation
 
 	return operations
@@ -79,6 +94,14 @@ func (am AppModule) ProposalMsgs(simState module.SimulationState) []simtypes.Wei
 			defaultWeightMsgRunCommand,
 			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
 				cosmoslinuxsimulation.SimulateMsgRunCommand(am.accountKeeper, am.bankKeeper, am.keeper)
+				return nil
+			},
+		),
+		simulation.NewWeightedProposalMsg(
+			opWeightMsgCreateMachine,
+			defaultWeightMsgCreateMachine,
+			func(r *rand.Rand, ctx sdk.Context, accs []simtypes.Account) sdk.Msg {
+				cosmoslinuxsimulation.SimulateMsgCreateMachine(am.accountKeeper, am.bankKeeper, am.keeper)
 				return nil
 			},
 		),

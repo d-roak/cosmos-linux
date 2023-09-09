@@ -6,11 +6,18 @@ option go_package = "cosmos-linux/x/cosmoslinux/types";
 
 // Msg defines the Msg service.
 service Msg {
-  rpc RunCommand (MsgRunCommand) returns (MsgRunCommandResponse);
+  rpc RunCommand    (MsgRunCommand   ) returns (MsgRunCommandResponse   );
+  rpc CreateMachine (MsgCreateMachine) returns (MsgCreateMachineResponse);
 }
 message MsgRunCommand {
   string creator = 1;
 }
 
 message MsgRunCommandResponse {}
+
+message MsgCreateMachine {
+  string creator = 1;
+}
+
+message MsgCreateMachineResponse {}
 

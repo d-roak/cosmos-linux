@@ -9,12 +9,16 @@ import (
 
 func RegisterCodec(cdc *codec.LegacyAmino) {
 	cdc.RegisterConcrete(&MsgRunCommand{}, "cosmoslinux/RunCommand", nil)
+	cdc.RegisterConcrete(&MsgCreateMachine{}, "cosmoslinux/CreateMachine", nil)
 	// this line is used by starport scaffolding # 2
 }
 
 func RegisterInterfaces(registry cdctypes.InterfaceRegistry) {
 	registry.RegisterImplementations((*sdk.Msg)(nil),
 		&MsgRunCommand{},
+	)
+	registry.RegisterImplementations((*sdk.Msg)(nil),
+		&MsgCreateMachine{},
 	)
 	// this line is used by starport scaffolding # 3
 
