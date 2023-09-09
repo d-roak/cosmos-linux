@@ -4,6 +4,7 @@ import (
 	"context"
 	"cosmos-linux/x/cosmoslinux/types"
 	"cosmos-linux/x/cosmoslinux/utils"
+	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"google.golang.org/grpc/codes"
@@ -18,12 +19,12 @@ func (k Keeper) CommandsList(goCtx context.Context, req *types.QueryCommandsList
 	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-    machine, err := k.GetMachine(ctx, req.MachineId)
-    if err != nil {
-        return nil, status.Error(codes.InvalidArgument, "invalid machine id")
-    }
+	machine, err := k.GetMachine(ctx, req.MachineId)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid machine id")
+	}
 
-    return &types.QueryCommandsListResponse{Commands: machine.Commands}, nil
+	return &types.QueryCommandsListResponse{Commands: machine.Commands}, nil
 }
 
 func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*types.QueryOutputResponse, error) {
@@ -32,14 +33,16 @@ func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*t
 	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-    machine, err := k.GetMachine(ctx, req.MachineId)
-    if err != nil {
-        return nil, status.Error(codes.InvalidArgument, "invalid machine id")
-    }
+	fmt.Println(req)
 
-    output, _ := utils.StartDockerContainer(machine.Commands)
+	machine, err := k.GetMachine(ctx, req.MachineId)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "invalid machine id")
+	}
 
-    return &types.QueryOutputResponse{Output: output}, nil
+	output, _ := utils.StartDockerContainer(machine.Commands)
+
+	return &types.QueryOutputResponse{Output: output}, nil
 }
 
 func (k Keeper) Params(goCtx context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

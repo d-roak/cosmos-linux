@@ -47,38 +47,39 @@ func (k Keeper) Logger(ctx sdk.Context) log.Logger {
 }
 
 func (k Keeper) AddMachine(ctx sdk.Context, machine types.Machine) string {
-    store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
 
-    appendedValue := k.cdc.MustMarshal(&machine)
-    store.Set([]byte(machine.Id), appendedValue)
+	appendedValue := k.cdc.MustMarshal(&machine)
+	store.Set([]byte(machine.Id), appendedValue)
 
-    return machine.Id
+	return machine.Id
 }
 
 func (k Keeper) GetMachine(ctx sdk.Context, machineId string) (types.Machine, error) {
-    store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
+	fmt.Println(machineId)
 
-    var machine types.Machine
-    k.cdc.MustUnmarshal(store.Get([]byte(machineId)), &machine)
+	var machine types.Machine
+	k.cdc.MustUnmarshal(store.Get([]byte(machineId)), &machine)
 
-    if machine.Id == "" {
-        return machine, fmt.Errorf("machine %s does not exist", machineId)
-    }
+	if machine.Id == "" {
+		return machine, fmt.Errorf("machine %s does not exist", machineId)
+	}
 
-    return machine, nil
+	return machine, nil
 }
 
 func (k Keeper) AppendCommand(ctx sdk.Context, machineId string, command string) error {
-    store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte(types.MachineKey))
 
-    machine, err := k.GetMachine(ctx, machineId)
-    if err != nil {
-        return err
-    }
-    machine.Commands = append(machine.Commands, command)
+	machine, err := k.GetMachine(ctx, machineId)
+	if err != nil {
+		return err
+	}
+	machine.Commands = append(machine.Commands, command)
 
-    appendedValue := k.cdc.MustMarshal(&machine)
-    store.Set([]byte(machine.Id), appendedValue)
+	appendedValue := k.cdc.MustMarshal(&machine)
+	store.Set([]byte(machine.Id), appendedValue)
 
-    return nil
+	return nil
 }

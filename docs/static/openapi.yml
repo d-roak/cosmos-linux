@@ -34933,7 +34933,7 @@ paths:
           schema:
             type: object
             properties:
-              command:
+              commands:
                 type: array
                 items:
                   type: string
@@ -70656,7 +70656,7 @@ definitions:
   cosmoslinux.cosmoslinux.QueryCommandsListResponse:
     type: object
     properties:
-      command:
+      commands:
         type: array
         items:
           type: string

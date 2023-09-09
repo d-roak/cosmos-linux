@@ -9,9 +9,11 @@ const TypeMsgRunCommand = "run_command"
 
 var _ sdk.Msg = &MsgRunCommand{}
 
-func NewMsgRunCommand(creator string) *MsgRunCommand {
+func NewMsgRunCommand(creator string, machineId string, command string) *MsgRunCommand {
 	return &MsgRunCommand{
 		Creator: creator,
+        MachineId: machineId,
+        Command: command,
 	}
 }
 

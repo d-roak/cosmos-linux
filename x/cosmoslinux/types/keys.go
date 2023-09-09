@@ -13,7 +13,7 @@ const (
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_cosmoslinux"
 
-    MachineKey = "Machine-Value-"
+	MachineKey = "Machine-Value-"
 )
 
 func KeyPrefix(p string) []byte {

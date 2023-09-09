@@ -10,9 +10,9 @@ service Msg {
   rpc CreateMachine (MsgCreateMachine) returns (MsgCreateMachineResponse);
 }
 message MsgRunCommand {
-  string creator = 1;
+  string creator   = 1;
   string machineId = 2;
-  string command = 3;
+  string command   = 3;
 }
 
 message MsgRunCommandResponse {}

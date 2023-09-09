@@ -4,6 +4,7 @@ import (
 	"strconv"
 
 	"cosmos-linux/x/cosmoslinux/types"
+
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/spf13/cobra"
@@ -17,6 +18,7 @@ func CmdCommandsList() *cobra.Command {
 		Short: "Query commands_list",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
+            argsMachineId := string(args[0])
 
 			clientCtx, err := client.GetClientQueryContext(cmd)
 			if err != nil {
@@ -25,7 +27,9 @@ func CmdCommandsList() *cobra.Command {
 
 			queryClient := types.NewQueryClient(clientCtx)
 
-			params := &types.QueryCommandsListRequest{}
+			params := &types.QueryCommandsListRequest{
+                MachineId: argsMachineId,
+            }
 
 			res, err := queryClient.CommandsList(cmd.Context(), params)
 			if err != nil {

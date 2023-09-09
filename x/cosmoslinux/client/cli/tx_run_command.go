@@ -15,10 +15,12 @@ var _ = strconv.Itoa(0)
 
 func CmdRunCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "run-command [cmd]",
+		Use:   "run-command [machineId] [cmd]",
 		Short: "Broadcast message run_command",
-		Args:  cobra.MinimumNArgs(1),
+		Args:  cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
+            argsMachineId := string(args[0])
+            argsCmd := string(args[1])
 
 			clientCtx, err := client.GetClientTxContext(cmd)
 			if err != nil {
@@ -27,6 +29,8 @@ func CmdRunCommand() *cobra.Command {
 
 			msg := types.NewMsgRunCommand(
 				clientCtx.GetFromAddress().String(),
+                argsMachineId,
+                argsCmd,
 			)
 			if err := msg.ValidateBasic(); err != nil {
 				return err
