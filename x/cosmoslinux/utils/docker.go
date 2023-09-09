@@ -79,7 +79,7 @@ func StartDockerContainer(commands []string) (string, error) {
 	outString := ""
 	s := bufio.NewScanner(out)
 	for s.Scan() {
-		outString += fmt.Sprintf("%q\n", s.Bytes())
+		outString += fmt.Sprintf("%q\n", s.Text())
 	}
 
 	return outString, nil
