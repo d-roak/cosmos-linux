@@ -3,6 +3,8 @@ package keeper
 import (
 	"context"
 	"cosmos-linux/x/cosmoslinux/types"
+	"crypto/md5"
+	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/google/uuid"
@@ -23,10 +25,16 @@ var _ types.MsgServer = msgServer{}
 func (k msgServer) CreateMachine(goCtx context.Context, msg *types.MsgCreateMachine) (*types.MsgCreateMachineResponse, error) {
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	// TODO: Handling the message
-	_ = ctx
+    commands_hash := md5.Sum([]byte(""))
 
-    id := uuid.New().String()
+    machine := types.Machine {
+        Creator: msg.Creator,
+        Id: uuid.New().String(),
+        State: fmt.Sprintf("%x", commands_hash),
+        Commands: []string{},
+    }
+
+    id := k.AddMachine(ctx, machine)
 
     return &types.MsgCreateMachineResponse{MachineId: id}, nil
 }
