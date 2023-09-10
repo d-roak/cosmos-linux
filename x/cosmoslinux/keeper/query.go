@@ -4,7 +4,6 @@ import (
 	"context"
 	"cosmos-linux/x/cosmoslinux/types"
 	"cosmos-linux/x/cosmoslinux/utils"
-	"fmt"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"google.golang.org/grpc/codes"
@@ -33,14 +32,12 @@ func (k Keeper) Output(goCtx context.Context, req *types.QueryOutputRequest) (*t
 	}
 	ctx := sdk.UnwrapSDKContext(goCtx)
 
-	fmt.Println(req)
-
 	machine, err := k.GetMachine(ctx, req.MachineId)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "invalid machine id")
 	}
 
-	output, _ := utils.StartDockerContainer(machine.Commands)
+	output, _ := utils.ExecuteDockerContainer(machine.Id, machine.Commands)
 
 	return &types.QueryOutputResponse{Output: output}, nil
 }
