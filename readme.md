@@ -1,4 +1,6 @@
-![179506e9-c868-43d3-b0e7-1d2b799e6f05](https://github.com/d-roak/cosmos-linux/assets/5263301/a5c8c6ab-f023-4879-aa36-82d5cb2bdedb)
+<p align="center">
+<img src="https://github.com/d-roak/cosmos-linux/assets/5263301/a5c8c6ab-f023-4879-aa36-82d5cb2bdedb" width="300"/>
+</p>
 
 # 🚀 cosmos-linux: Let's Journey through the Cosmos!
 Welcome to cosmos-linux, the splendid combination of Cosmos SDK and Celestia DA Layer! Dive into the thrill of creating a Linux VM, execute your favorite commands, and bask in the glow of your machine's output.
